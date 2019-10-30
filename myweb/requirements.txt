@@ -1,4 +1,4 @@
-django==1.8.0
+django==1.11.23
 dj-database-url==0.4.2
 django-sekizai==0.10.0
 django-compressor==2.1.1
