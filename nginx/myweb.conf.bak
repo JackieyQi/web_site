@@ -1,0 +1,36 @@
+upstream web {  
+  ip_hash;
+  server web:8080;
+}
+
+# portal
+server {  
+  listen 443;
+  server_name website;
+
+  ssl on;
+  ssl_certificate   /etc/nginx/conf.d/ymeo.info.cer;
+  ssl_certificate_key  /etc/nginx/conf.d/ymeo.info.key;
+  ssl_session_timeout 5m;
+  ssl_prefer_server_ciphers on;
+
+  location / {
+        proxy_pass http://web/;
+    }
+
+  location /static/ {
+        autoindex on;
+        alias /code/static/;
+    }
+
+  location /media/ {
+        alias /code/media/;
+    }
+}
+
+server {
+  listen 80;
+  server_name localhost;
+  rewrite ^(.*)$ https://${server_name}$1 permanent;
+
+}

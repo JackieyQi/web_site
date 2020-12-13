@@ -1,0 +1,30 @@
+{% extends "site_base.html" %}
+
+{% block head_title_base %}{{ fotopost.title }} | {{ SITE_NAME }}{% endblock %}
+
+{% block search_bar %}
+    <div class="search">
+        <form class="form-search" action="/foto">
+            <label><i class="fa fa-search"></i></label>
+            <input class="form-control" type="search" placeholder="Search..." name="q" value="">
+        </form>
+    </div>
+{% endblock %}
+
+{% block body %}
+{% block content %}
+    <div class="post-detail">
+        <div class="post">
+            <h1>{{ fotopost.title }}</h1>
+            {% include "foto/dateline_stale.html" %}
+
+            <!--<div class="teaser">{{ fotopost.teaser|safe }}</div>-->
+
+            <div class="content">{{ fotopost.body|safe }}</div>
+
+        </div>
+    </div>
+
+    {% include "_disqus.html" %}
+{% endblock %}
+{% endblock %}

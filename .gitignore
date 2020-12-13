@@ -56,3 +56,5 @@ build
 
 # configurations:
 *.ini
+*.yml
+*.conf

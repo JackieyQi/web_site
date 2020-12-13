@@ -1,0 +1,29 @@
+version: '3'
+services:
+    db:
+        image: mysql
+        restart: always
+        environment:
+          - MYSQL_ROOT_PASSWORD=
+        ports:
+          - "3306:3306"
+    web:
+        build: .
+        command: uwsgi --http 0.0.0.0:8080 --module myweb.wsgi
+        volumes:
+          - .:/code
+        expose:
+          - "8080"
+        depends_on:
+          - db
+    ngx:
+        image: nginx:latest
+        restart: always
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - .:/code
+          - ./nginx:/etc/nginx/conf.d
+        depends_on:
+          - web
