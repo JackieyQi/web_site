@@ -30,9 +30,7 @@ MANAGERS = ADMINS
 SECRET_KEY = ALL_CONFIG["KEY"]["django_secret_key"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# TODO
-# DEBUG = False
+DEBUG = False
 
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', '*'), ]
 
@@ -53,8 +51,7 @@ INSTALLED_APPS = (
     'blog',
     'foto',
     'about',
-    # TODO
-    # 'disqus',
+    'disqus',
 
     'theme',
     'labels',
