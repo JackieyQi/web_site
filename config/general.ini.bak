@@ -1,0 +1,18 @@
+
+[KEY]
+django_secret_key = ''
+
+[DATABASE]
+ENGINE=django.db.backends.mysql
+NAME=db
+USER=root
+PASSWORD=111111
+HOST=127.0.0.1
+PORT=3306
+
+[POSTAPPCONF]
+paginate = 10
+
+[DISQUS]
+key=test
+shortname=test-01

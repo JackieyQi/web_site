@@ -1,0 +1,6 @@
+<p class="post-meta">
+    {% if not post.stale %}
+        <span class="date">{% if fotopost.publish_time %}{{ fotopost.publish_time|date:"Y.m.d" }}{% else %}Not published yet{% endif %}</span> /
+    {% endif %}
+    by <span class="author">{{ fotopost.author.username }}</span>
+ </p>

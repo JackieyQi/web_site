@@ -1,0 +1,53 @@
+
+    <ul class="hr-nav hidden-xs">
+        <li class="active">
+            <a href="{% url 'yme_home:index' %}">All</a>
+        </li>
+
+
+            <li class="">
+                <a href="{% url 'yme_blog:index' %}">BLOG</a>
+            </li>
+
+            <li class="">
+                <a href="{% url 'yme_foto:index' %}">FOTO</a>
+            </li>
+
+            <li class="">
+                <a href="{% url 'yme_about:index' %}">ABOUT</a>
+            </li>
+
+    </ul>
+
+    <article class="hr-nav-mobile visible-xs">
+        <div class="dropdown">
+            View posts:
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        All
+
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="active">
+                        <a href="{% url 'yme_home:index' %}">All</a>
+                    </li>
+
+
+                        <li class="">
+                            <a href="{% url 'yme_blog:index' %}">BLOG</a>
+                        </li>
+
+                        <li class="">
+                            <a href="{% url 'yme_foto:index' %}">FOTO</a>
+                        </li>
+
+                        <li class="">
+                            <a href="{% url 'yme_about:index' %}">ABOUT</a>
+                        </li>
+
+                </ul>
+            </div>
+        </div>
+    </article>

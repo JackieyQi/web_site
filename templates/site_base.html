@@ -1,0 +1,109 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+				<meta name="google-site-verification" content="" />
+        <meta charset="utf-8" />
+        <title>{% block head_title_base %}{% if SITE_NAME %}{{ SITE_NAME }}{% endif %}{% block head_title %}{% endblock %}{% endblock %}</title>
+        {% block viewport %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+        <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link type="text/css" rel='stylesheet' href="{% static 'css/site.css' %}">
+
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        {% block html5shim %}
+            <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+            <!--[if lt IE 9]>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <![endif]-->
+        {% endblock %}
+
+        {% comment %}
+        <meta name="github:site" content="@2bbing">
+        {% endcomment %}
+        <meta property="og:site_name" content="{{ SITE_NAME }}">
+    </head>
+    <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}" {% block body_extra_attributes %}{% endblock %}>
+        <div class="{% block wrapper_class %}{% endblock %}">
+
+            {% block topbar_base %}
+                <aside class="cover">
+                    <div class="cover-inner clearfix animated fadeInLeft">
+                        <div class="logo">
+                            <a href="/">
+                                <img src="{% static 'images/site.png' %}" />
+                            </a>
+                        </div>
+                        <p>
+                            <!-- Place this tag where you want the button to render. -->
+                            <a class="github-button" href="https://github.com/JackieyQi">Follow @2bbing</a>
+                        </p>
+
+                        <div class="page-info">
+                            <p>Ymeo个人开源站点，基于django搭建，欢迎交流。</p>
+                        </div>
+                        <div class="label-info">
+                            <p>{% include "_labels.html" %}</p>
+                        </div>
+
+                        {% block search_bar %}{% endblock %}
+                    </div>
+                </aside>
+            {% endblock %}
+
+            {% block body_base %}
+                <section class="content-wrap">
+                    <section class="content-details">
+                        {% include "_messages.html" %}
+                        {% include "_navbar.html" %}
+                        {% block body %}
+                        {% endblock %}
+                    </section>
+                </section>
+            {% endblock %}
+
+
+        </div>
+
+					<!-- div class="twitter-button">
+						<a href="https://twitter.com/share" class="twitter-share-button" data-via="">Tweet</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					</div>
+					<div class="fb-share-button"
+						data-href=""
+						data-layout="button">
+					</div>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+				<script>(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script>
+							<a href="http://service.weibo.com/share/share.php?appkey=&title=&url=&pic=&searchPic=false&style=simple" target="_blank"-->
+        <script src="{% static 'js/site.js' %}"></script>
+        {% block scripts %}{% endblock %}
+
+        {% block theme_script %}
+            <script src="{% static 'js/theme.js' %}"></script>
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-2401894-50']);
+                _gaq.push(['_trackPageview']);
+                _gaq.push(['_trackPageLoadTime']);
+                // _gaq.push(['_setCustomVar', 1, 'Authentication Type', ut, 2]);
+
+
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+        {% endblock %}
+
+        {% block extra_body_base %}
+            {% block extra_body %}{% endblock %}
+        {% endblock %}
+    </body>
+</html>

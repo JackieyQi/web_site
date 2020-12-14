@@ -1,0 +1,6 @@
+{% if labels_list %}
+    {% for label in labels_list %}
+        {% url "yme_label:label" label.slug as label_url %}
+        <a href="{{ label_url }}"><span class="label label-primary">{{ label.name }}</span></a>
+    {% endfor %}
+{% endif %}

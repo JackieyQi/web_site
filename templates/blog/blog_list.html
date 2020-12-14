@@ -1,0 +1,34 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title_base %} Blog | {{ SITE_NAME }}{% endblock %}
+
+{% block search_bar %}
+    <div class="search">
+        <form class="form-search" action="/blog">
+            <label><i class="fa fa-search"></i></label>
+            <input class="form-control" type="search" placeholder="Search..." name="q" value="">
+        </form>
+    </div>
+{% endblock %}
+
+{% block body %}
+{% block content %}
+    {% if blogpost_list %}
+        <div class="post-list">
+            {% for blogpost in blogpost_list %}
+                <div class="post">
+                    <h2><a href="{{ blogpost.get_absolute_url }}">{{ blogpost.title }}</a></h2>
+                    {% include "blog/dateline.html" %}
+                    <div class="teaser">{{ blogpost.teaser|safe }}</div>
+                    <p class="more"><a href="{{ blogpost.get_absolute_url }}" class="post-link">read more...</a></p>
+                </div>
+            {% endfor %}
+        </div>
+        {% include "pagination/builtin_pagination_reverse.html" %}
+    {% else %}
+        <p class="alert alert-info lead">暂无内容。</p>
+    {% endif %}
+{% endblock %}
+{% endblock %}
