@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'blog',
     'foto',
     'about',
-    'disqus',
+    # 'disqus',
 
     'theme',
     'labels',

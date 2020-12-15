@@ -13,3 +13,4 @@ rcssmin==1.0.6
 rjsmin==1.1.0
 six==1.15.0
 sqlparse==0.4.1
+uWSGI==2.0.19.1

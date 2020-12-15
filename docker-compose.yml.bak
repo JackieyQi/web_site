@@ -3,12 +3,14 @@ services:
     db:
         image: mysql
         restart: always
+        container_name: db_c
         environment:
           - MYSQL_ROOT_PASSWORD=
         ports:
           - "3306:3306"
     web:
         build: .
+        container_name: web_c
         command: uwsgi --http 0.0.0.0:8080 --module myweb.wsgi
         volumes:
           - .:/code
@@ -19,6 +21,7 @@ services:
     ngx:
         image: nginx:latest
         restart: always
+        container_name: ngx_c
         ports:
           - "80:80"
           - "443:443"
