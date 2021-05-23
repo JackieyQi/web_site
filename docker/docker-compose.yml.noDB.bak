@@ -1,0 +1,34 @@
+version: '3'
+services:
+    web:
+        build: .
+        container_name: web_c
+        command: uwsgi --http 0.0.0.0:8080 --module myweb.wsgi
+        volumes:
+          - .:/code
+        expose:
+          - "8080"
+        networks:
+          web_net:
+            ipv4_address: 172.18.0.3
+    ngx:
+        image: nginx:latest
+        restart: always
+        container_name: ngx_c
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - .:/code
+          - ./nginx:/etc/nginx/conf.d
+        depends_on:
+          - web
+        networks:
+          web_net:
+            ipv4_address: 172.18.0.4
+networks:
+    web_net:
+      ipam:
+        driver: default
+        config:
+          - subnet: 172.18.0.0/24
