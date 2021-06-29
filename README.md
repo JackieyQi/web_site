@@ -20,7 +20,7 @@ Development environment:
 Production environment:
 >`$ docker-compose up`
 
->into container, initialize db and configuration
+Into container, initialize db and configuration
 
 >`$ docker exec -it container_web_id /bin/bash`
 
@@ -29,6 +29,22 @@ Production environment:
 >`$ python manage makemigration`
 
 >`$ python manage createsuperuser`
+
+
+# Database Commands
+Run MySQL container in local development environment:
+>`$ docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:5.7`
+
+Import data to MySQL database in Docker:
+>`$ docker exec -i mysql_container mysql -uroot -psecret mysql < db.sql`
+
+
+# Code Style
+To maintain the code consistency, this project uses following tools.
+
+* **[flake8](https://github.com/PyCQA/flake8)**
+* **[isort](https://github.com/timothycrosley/isort)**
+* **[black](https://github.com/python/black)**
 
 
 # More

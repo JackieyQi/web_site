@@ -1,14 +1,14 @@
 # coding:utf8
 
+from random import choice
+
+import pytz
+from ckeditor_uploader.fields import RichTextUploadingField
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from django.conf import settings
 from django.utils import timezone
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.translation import ugettext_lazy as _
-
-from random import choice
-import pytz
 
 try:
     from string import letters
@@ -32,13 +32,14 @@ class BlogPost(models.Model):
     title = models.CharField(_("title"), max_length=150)
     slug = models.SlugField(_("slug"))
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name="blog_posts",
-        verbose_name=_("author"), on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        related_name="blog_posts",
+        verbose_name=_("author"),
+        on_delete=models.CASCADE,
     )
 
     labels = models.ManyToManyField(
-        YmeLabel, null=True, blank=True,
-        related_name="blog_posts", verbose_name=_("YmeLabel")
+        YmeLabel, blank=True, related_name="blog_posts", verbose_name=_("YmeLabel")
     )
 
     teaser = RichTextUploadingField(_("teaser"), editable=True, blank=True)
@@ -50,16 +51,17 @@ class BlogPost(models.Model):
     update_time = models.DateTimeField(
         _("update_time"), null=True, blank=True, editable=False
     )
-    publish_time = models.DateTimeField(
-        _("publish_time"), null=True, blank=True
-    )
+    publish_time = models.DateTimeField(_("publish_time"), null=True, blank=True)
     state = models.IntegerField(
         _("state"), choices=STATE_CHOICE, default=STATE_CHOICE[-1][0]
     )
 
     secret_key = models.CharField(
-        _("secret key"), max_length=8, blank=True, unique=True,
-        help_text=_("unique key for share url")
+        _("secret key"),
+        max_length=8,
+        blank=True,
+        unique=True,
+        help_text=_("unique key for share url"),
     )
 
     objects = BlogPostManager()
@@ -83,7 +85,7 @@ class BlogPost(models.Model):
             if self.secret_key:
                 return reverse(
                     "yme_blog:blog_post_secret",
-                    kwargs={"post_secret_key": self.secret_key}
+                    kwargs={"post_secret_key": self.secret_key},
                 )
             else:
                 return "保存文档自动生成链接"
@@ -97,8 +99,9 @@ class BlogPost(models.Model):
         else:
             name = "yme_blog:blog_post"
             if settings.USE_TZ and settings.TIME_ZONE:
-                publish_time = pytz.timezone(
-                    settings.TIME_ZONE).normalize(self.publish_time)
+                publish_time = pytz.timezone(settings.TIME_ZONE).normalize(
+                    self.publish_time
+                )
             else:
                 publish_time = self.publish_time
             kwargs = {
