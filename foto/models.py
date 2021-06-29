@@ -1,13 +1,15 @@
 # coding:utf8
 
-import pytz
 from random import choice
-from django.db import models
-from django.conf import settings
-from django.utils import timezone
-from django.urls import reverse
+
+import pytz
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.conf import settings
+from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
 try:
     from string import letters
 except ImportError:
@@ -32,22 +34,37 @@ class FotoPost(models.Model):
     title = models.CharField(_("title"), max_length=150)
     slug = models.SlugField(_("slug"))
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name="foto_posts",
-        verbose_name=_("author"), on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        related_name="foto_posts",
+        verbose_name=_("author"),
+        on_delete=models.CASCADE,
     )
 
-    labels = models.ManyToManyField(YmeLabel, null=True, blank=True, related_name="foto_posts", verbose_name=_("YmeLabel"))
+    labels = models.ManyToManyField(
+        YmeLabel, blank=True, related_name="foto_posts", verbose_name=_("YmeLabel")
+    )
 
     teaser = RichTextUploadingField(_("teaser"), editable=True, blank=True)
     body = RichTextUploadingField(_("body"), blank=True)
 
-    create_time = models.DateTimeField(_("create_time"), default=timezone.now, editable=False)
-    update_time = models.DateTimeField(_("update_time"), null=True, blank=True, editable=False)
+    create_time = models.DateTimeField(
+        _("create_time"), default=timezone.now, editable=False
+    )
+    update_time = models.DateTimeField(
+        _("update_time"), null=True, blank=True, editable=False
+    )
     publish_time = models.DateTimeField(_("publish_time"), null=True, blank=True)
-    state = models.IntegerField(_("state"), choices=STATE_CHOICE, default=STATE_CHOICE[-1][0])
+    state = models.IntegerField(
+        _("state"), choices=STATE_CHOICE, default=STATE_CHOICE[-1][0]
+    )
 
-    secret_key = models.CharField(_("secret key"), max_length=8, blank=True, unique=True,
-                                  help_text=_("unique key for share url"))
+    secret_key = models.CharField(
+        _("secret key"),
+        max_length=8,
+        blank=True,
+        unique=True,
+        help_text=_("unique key for share url"),
+    )
 
     objects = FotoPostManager()
 
@@ -68,7 +85,10 @@ class FotoPost(models.Model):
     def share_url(self):
         if not self.is_published:
             if self.secret_key:
-                return reverse("yme_foto:foto_post_secret", kwargs={"post_secret_key": self.secret_key})
+                return reverse(
+                    "yme_foto:foto_post_secret",
+                    kwargs={"post_secret_key": self.secret_key},
+                )
             else:
                 return u"保存文档自动生成链接"
         else:
@@ -81,7 +101,9 @@ class FotoPost(models.Model):
         else:
             name = "yme_foto:foto_post"
             if settings.USE_TZ and settings.TIME_ZONE:
-                publish_time = pytz.timezone(settings.TIME_ZONE).normalize(self.publish_time)
+                publish_time = pytz.timezone(settings.TIME_ZONE).normalize(
+                    self.publish_time
+                )
             else:
                 publish_time = self.publish_time
             kwargs = {

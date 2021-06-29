@@ -1,13 +1,15 @@
 # coding:utf8
 
+from random import choice
+
 import pytz
+from ckeditor_uploader.fields import RichTextUploadingField
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from ckeditor_uploader.fields import RichTextUploadingField
-from random import choice
+
 try:
     from string import letters
 except ImportError:
@@ -29,17 +31,31 @@ class AboutPostManager(models.Manager):
 # Create your models here.
 class AboutPost(models.Model):
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name="about_posts",
-        verbose_name=_("author"), on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        related_name="about_posts",
+        verbose_name=_("author"),
+        on_delete=models.CASCADE,
     )
     body = RichTextUploadingField(_("body"), blank=True)
 
-    create_time = models.DateTimeField(_("create_time"), default=timezone.now, editable=False)
-    update_time = models.DateTimeField(_("update_time"), null=True, blank=True, editable=False)
+    create_time = models.DateTimeField(
+        _("create_time"), default=timezone.now, editable=False
+    )
+    update_time = models.DateTimeField(
+        _("update_time"), null=True, blank=True, editable=False
+    )
     publish_time = models.DateTimeField(_("publish_time"), null=True, blank=True)
-    state = models.IntegerField(_("state"), choices=STATE_CHOICE, default=STATE_CHOICE[-1][0])
+    state = models.IntegerField(
+        _("state"), choices=STATE_CHOICE, default=STATE_CHOICE[-1][0]
+    )
 
-    secret_key = models.CharField(_("secret key"), max_length=8, blank=True, unique=True, help_text=_("unique key for share url"))
+    secret_key = models.CharField(
+        _("secret key"),
+        max_length=8,
+        blank=True,
+        unique=True,
+        help_text=_("unique key for share url"),
+    )
 
     objects = AboutPostManager()
 
@@ -62,7 +78,7 @@ class AboutPost(models.Model):
             if self.secret_key:
                 return reverse(
                     "yme_about:about_post_secret",
-                    kwargs={"post_secret_key": self.secret_key}
+                    kwargs={"post_secret_key": self.secret_key},
                 )
             else:
                 return u"保存文档自动生成链接"
@@ -75,7 +91,9 @@ class AboutPost(models.Model):
         else:
             name = "yme_about:index"
             if settings.USE_TZ and settings.TIME_ZONE:
-                publish_time = pytz.timezone(settings.TIME_ZONE).normalize(self.publish_time)
+                publish_time = pytz.timezone(settings.TIME_ZONE).normalize(
+                    self.publish_time
+                )
             else:
                 publish_time = self.publish_time
         return reverse(name)
